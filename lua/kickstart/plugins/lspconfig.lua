@@ -235,6 +235,16 @@ return {
             },
           },
         },
+        omnisharp = {
+          cmd = { 'omnisharp' }, -- Ensure OmniSharp is installed and in PATH
+          filetypes = { 'cs', 'vb' }, -- Enable for C# and VB.NET
+          root_dir = require('lspconfig.util').root_pattern('*.sln', '*.csproj', '.git'),
+          enable_editorconfig_support = true,
+          enable_ms_build_load_projects_on_demand = false,
+          enable_roslyn_analyzers = true,
+          organize_imports_on_format = true,
+          capabilities = vim.tbl_deep_extend('force', capabilities, {}),
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -253,6 +263,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'omnisharp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
