@@ -244,6 +244,14 @@ return {
           enable_roslyn_analyzers = true,
           organize_imports_on_format = true,
           capabilities = vim.tbl_deep_extend('force', capabilities, {}),
+          settings = {
+            omnisharp = {
+              EnablePackageRestore = true,
+              MsBuild = {
+                LoadProjectsOnDemand = false,
+              },
+            },
+          },
         },
       }
 
