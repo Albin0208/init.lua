@@ -52,3 +52,30 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 --
 -- Greatest remap of all time, paste over and delete the paste over
 vim.keymap.set('x', '<leader>p', [["_dp]])
+-- Enable and disable copilot
+vim.keymap.set('n', '<leader>ct', function()
+  if vim.g.copilot_enabled then
+    vim.g.copilot_enabled = false
+    print 'Copilot disabled'
+  else
+    vim.g.copilot_enabled = true
+    print 'Copilot enabled'
+  end
+end, { desc = 'Toggle Copilot' })
+
+-- Keep the cursor in the center of the screen when scrolling
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
+-- When searching keep the cursor in the center
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
+
+-- Delete without overwriting the clipboard
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
+
+-- Quickfix navigation
+vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
+vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
+vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
+vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
