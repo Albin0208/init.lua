@@ -298,6 +298,52 @@ return {
           end,
         },
       }
+
+      local lspconfig = require 'lspconfig'
+
+      lspconfig.eslint.setup {
+        cmd = { 'vscode-eslint-language-server', '--stdio' },
+        filetypes = {
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+          'vue',
+          'svelte',
+          'astro',
+        },
+        root_dir = lspconfig.util.root_pattern(
+          '.eslintrc',
+          '.eslintrc.js',
+          '.eslintrc.cjs',
+          '.eslintrc.yaml',
+          '.eslintrc.yml',
+          '.eslintrc.json',
+          'eslint.config.js',
+          'package.json'
+        ),
+        settings = {
+          validate = 'on',
+          packageManager = 'npm',
+          codeActionOnSave = {
+            enable = true,
+            mode = 'all',
+          },
+          format = true,
+          workingDirectory = {
+            mode = 'auto',
+          },
+        },
+        on_attach = function(client, bufnr)
+          -- Enable auto-format on save for eslint
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format { bufnr = bufnr }
+            end,
+          })
+        end,
+      }
     end,
   },
 }
